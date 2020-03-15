@@ -73,6 +73,10 @@ class TrafficGraph extends PureComponent {
     }
   }
 
+  /**
+   * This function will read the data received from the request, and set the series
+   * to be displayed in the charts
+   */
   componentWillMount() {
     let { configTerminals, configPassengerCounts } = this.state;
     let passCountCategories = computePassCountCategories(this.props.journeys);

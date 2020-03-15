@@ -45,16 +45,16 @@ class Content extends PureComponent {
     this.setState({ displayChart: displayChart });
   };
 
+  /**
+   * Will change the data contained in the component DataTable
+   */
   updateTable = (res) => {
-    console.log(res)
     this.dataIsDownloaded = true;
     const { success, result } = res;
     const { journeys } = result;
     if (success) {
       this.setState({journeys: journeys.map(formatJourney)});
-      console.log(this.state.journeys);
     } else {
-      console.log(res.message);
       alert(res.message);
     }
   }

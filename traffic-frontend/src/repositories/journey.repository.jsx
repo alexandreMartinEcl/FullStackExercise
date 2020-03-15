@@ -3,7 +3,6 @@ import agent from '../services/http';
 const journeyUrl = '/api/journeys';
 const listUrl = '/list';
 
-
 /**
  * Format Journeys with Python style keys to Js style keys
  * @param {*} pythonJourney
@@ -29,7 +28,7 @@ export function journeyValues() {
 }
 
 /**
- * Add a journey to Json file on server
+ * Add a journey to Json file on
  * @param {Date} reportPeriod
  * @param {String} terminal
  * @param {String} arrivalDeparture
