@@ -10,7 +10,8 @@ import agent from 'superagent';
 
 
 // Swap base if you want to access online backend with local frontend
-const base = 'http://127.0.0.1:8000';
+// const base = 'http://127.0.0.1:8000';
+const base = process.env.BACKEND_BASE_URL;
 
 function localCreateJourney(journeyData) {
   return new Promise((resolve) => {
@@ -61,7 +62,6 @@ function localGetJourneys() {
 const choiceAgent = {
   local: {
     get: (url) => {
-      console.log(url);
       if (url === '/api/journeys/list') {
         return localGetJourneys();
       }

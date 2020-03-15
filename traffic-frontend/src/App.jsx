@@ -7,6 +7,19 @@ import theme from './theme';
 import Content from './components/Content';
 
 const styles = (theme) => ({
+  root: {
+    marginTop: 24,
+    '@media (min-width:0px) and (orientation: landscape)': {
+      marginTop: 24
+    },
+    '@media (min-width:600px)': {
+      marginTop: 40
+    }
+  },
+  content: {
+    textAlign: 'center',
+    paddingTop: theme.spacing.unit * 5,
+  }
 });
 
 
@@ -30,4 +43,3 @@ class App extends Component {
 
 
 export default withStyles(styles)(App);
-// export default App;
