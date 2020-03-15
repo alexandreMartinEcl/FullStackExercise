@@ -9,7 +9,17 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
+import { journeyValues } from '../repositories/journey.repository';
+
 const styles = theme => ({
+  HeadTableCell: {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.common.white,
+    fontSize: 14,
+  },
+  TableCell: {
+    fontSize: 14,
+  },   
 });
 
 class JourneyTable extends PureComponent {
@@ -25,6 +35,14 @@ class JourneyTable extends PureComponent {
     }))
   };
 
+  columnLabels = [
+    'Report period',
+    'Terminal',
+    'Arrival or departure',
+    'Domestic or international',
+    'Passenger count',
+  ]
+
   static defaultProps = {
     className: ''
   };
@@ -33,26 +51,24 @@ class JourneyTable extends PureComponent {
   render() {
     const { classes } = this.props;
     const { journeys } = this.props;
+    const columnLabels = this.columnLabels;
+    const values = journeyValues();
     return (
       <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
+        <Table className={classes.table} aria-label="sticky table">
           <TableHead>
-            <TableRow>
-              <TableCell>Report period</TableCell>
-              <TableCell align="right">Terminal</TableCell>
-              <TableCell align="right">Arrival or departure</TableCell>
-              <TableCell align="right">Domestic or International</TableCell>
-              <TableCell align="right">Passenger count</TableCell>
+            <TableRow className={classes.HeadTableCell}>
+              {columnLabels.map( columnLabel => (
+                <TableCell align='middle'>{columnLabel}</TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
             {journeys.map(row => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row"> {row.reportPeriod} </TableCell>
-                <TableCell align="right">{row.terminal}</TableCell>
-                <TableCell align="right">{row.arrivalDeparture}</TableCell>
-                <TableCell align="right">{row.domesticInternational}</TableCell>
-                <TableCell align="right">{row.passengerCount}</TableCell>
+              <TableRow className={classes.TableCell}>
+              {values.map(val => (
+                <TableCell align="left">{row[val]}</TableCell>
+              ))}
               </TableRow>
             ))}
           </TableBody>
@@ -62,5 +78,4 @@ class JourneyTable extends PureComponent {
   }
 }
 
-// export default JourneyTable;
 export default withStyles(styles)(JourneyTable);

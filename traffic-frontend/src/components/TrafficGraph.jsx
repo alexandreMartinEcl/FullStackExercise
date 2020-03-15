@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import ReactHighcharts from 'react-highcharts';
+import theme from '../theme';
 
 import { computePassCountCategories, getCategory} from '../services/GraphShaper';
 
@@ -43,8 +44,13 @@ class TrafficGraph extends PureComponent {
         }
       },
       series: [{
-        name: "Arrival/Departure rate",
+        name: "Arrivals",
         data: null,
+        color: theme.palette.primary.main,
+      },{
+        name: "Departures",
+        data: null,
+        color: theme.palette.secondary.main,
       }],
     },
     configPassengerCounts: {
@@ -56,11 +62,13 @@ class TrafficGraph extends PureComponent {
       },
       series: [{
         data: null,
-        name: "Arrivals"
+        name: "Arrivals",
+        color: theme.palette.primary.main,
       },
       {
         data: null,
-        name: "Departures"
+        name: "Departures",
+        color: theme.palette.secondary.main,
       }],
     }
   }
@@ -87,13 +95,13 @@ class TrafficGraph extends PureComponent {
       j.arrivalDeparture === "Arrival" ? dctTerminalData[j.terminal].arrivals++ : dctTerminalData[j.terminal].departures++;
     });
 
-    console.log(dctTerminalData)
     configPassengerCounts.series = passCountSeries;
     configPassengerCounts.xAxis.categories = passCountCategories;
 
-    let dataTerminals = Object.keys(dctTerminalData).map(k => [k, dctTerminalData[k].arrivals / dctTerminalData[k].departures]);
-    console.log(dataTerminals)
-    configTerminals.series[0].data = dataTerminals;
+    let dataArrivals = Object.keys(dctTerminalData).map(k => [k, dctTerminalData[k].arrivals]);
+    let dataDepartures = Object.keys(dctTerminalData).map(k => [k, dctTerminalData[k].departures]);
+    configTerminals.series[0].data = dataArrivals;
+    configTerminals.series[1].data = dataDepartures;
     configTerminals.xAxis.categories = Object.keys(dctTerminalData);
 
     this.setState({ configTerminals, configPassengerCounts });

@@ -8,6 +8,13 @@ import JourneyTable from './JourneyTable';
 import TrafficGraph from './TrafficGraph';
 
 const styles = theme => ({
+  dataDisplay: {
+     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+     margin: 20,
+  },
+  button: {
+    margin: 5,
+  }
 });
 
 class Content extends PureComponent {
@@ -25,10 +32,6 @@ class Content extends PureComponent {
     displayChart: false,
     journeys: [],
   };
-
-  componentDidUpdate() {
-    console.log('yes'); 
-  }
 
   /**
    * Launch request to download traffic data
@@ -57,26 +60,36 @@ class Content extends PureComponent {
   }
 
   render() {
-    const {className} = this.props;
+    const { className, classes } = this.props;
     const { journeys, displayChart } = this.state;
     return (
       <div className={className}>
         <div>
           <Button
+            className={classes.button}
+            variant='contained' 
+            color='primary'
             onClick={this.handleGetDataClick}>
               Télécharger le traffic
           </Button>
 
           <Button
+            className={classes.button}
+            variant='outlined' 
+            color='primary'
             onClick={this.handleDisplayGraphClick}>
               {displayChart ? "Afficher le tableau" : "Afficher le graphique"}
           </Button>
         </div>
 
-        <div>
-          {journeys.length && displayChart && (<TrafficGraph journeys={journeys}></TrafficGraph>)}
-          {journeys.length && !displayChart && (<JourneyTable journeys={journeys}></JourneyTable>)}
-        </div>
+        {journeys.length ? 
+          <div className={classes.dataDisplay}>
+            {displayChart ? 
+            <TrafficGraph journeys={journeys}></TrafficGraph>
+            : <JourneyTable journeys={journeys}></JourneyTable>}
+          </div>
+          : null
+        }
 
       </div>
     );

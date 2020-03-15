@@ -15,10 +15,8 @@ const scale = 100000;
 export function computePassCountCategories(journeys) {
   const passengerCounts = journeys.map((j) => j.passengerCount);
   const maxPC = Math.max.apply(null, passengerCounts);
-  // const minPC = Math.min.apply(passengerCounts)
 
   let categories = [...Array(Math.floor(maxPC / scale) + 1).keys()];
-  // .filter(n => n >= Math.floor(minPC / scale))
   categories = categories.map((n) => `From ${n * scale} to ${(n + 1) * scale}`);
 
   return categories;

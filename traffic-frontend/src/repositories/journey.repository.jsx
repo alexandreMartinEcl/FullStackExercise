@@ -18,6 +18,15 @@ export function formatJourney(journey) {
   };
 }
 
+export function journeyValues() {
+  return [
+    'reportPeriod',
+    'terminal',
+    'arrivalDeparture',
+    'domesticInternational',
+    'passengerCount',
+  ];
+}
 
 /**
  * Add a journey to Json file on server
@@ -35,7 +44,6 @@ export async function createJourney(reportPeriod, terminal,
   const req = agent.online.post(journeyUrl).send({ journey });
   try {
     const { body } = await req;
-    console.log(body);
     return body;
   } catch (err) {
     return err;
